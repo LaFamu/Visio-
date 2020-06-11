@@ -1,0 +1,27 @@
+Visio二次开发使用到了两个namespace
+using Visio = Microsoft.Office.Interop.Visio;//这个namespace中是所有的Visio对象模型的对象
+using AxVisOcx = AxMicrosoft.Office.Interop.VisOcx;//这个namespace中有该控件的对象
+
+对于这个control,有几个很重要的属性需要直到
+Src:这个属性用来打开或者关闭当前文档，关闭当前文档直接设置Src=""就可以了，打开时，设置Src等于打开文件的路径(绝对路径)。
+
+接着，要了解Visio的对象模型，这个看msdn中就有这个object model,还有详细说明。这里需要至少用到的一些对象包括
+private Visio.Application visApplication = null;//当前Visio Control的Application对象
+private Visio.Page visPage = null;//当前Visio Control的Page对象
+private Visio.Document visDocument = null;//当前Visio Control的Document对象
+private Visio.Documents visDocuments = null;//当前Visio Control的Documents对象
+private Visio.Window visWindow = null;//当前Visio Control的Window对象
+private Visio.Shape visClickedShape = null;//当前Visio Control点击的Shape对象
+这些对象需要设置，如果打开的文档发生了变化，需要更新，最好有这样的函数
+private void SetVisioVariables()
+{
+    visApplication = (Visio.Application)visDrawing.Window.Application;
+    visPage = (Visio.Page)visDrawing.Document.Pages[1];
+    visWindow = (Visio.Window)visDrawing.Window;
+    visDocument = (Visio.Document)visDrawing.Document;
+    visDocuments = (Visio.Documents)visDrawing.Window.Application.Documents;
+}
+这里设置visPage直接等于isDrawing.Document.Pages[1]是因为我这里使用的单页模式，所以直接设置。（注意Visio里面的Collection是从1开始的而不是0）
+还有一些属性可以控制，比如:
+visWindow.ShowPageTabs = false;//不让显示页的标签
+visWindow.Zoon = 1.00;//设置缩放比例为100%
