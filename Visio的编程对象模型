@@ -1,0 +1,15 @@
+Visio二次开发中，对于其对象模型的了解，就像我们吃饭用筷子一样重要，否则不熟悉筷子的使用场景和方法，是吃不到东西的。
+其中主要的是下面几个对象:
+Application
+Window(Application.ActiveWindow)
+Document(Application.ActiveDocument)
+Master、Shape、Cell
+一个程序中，就只有一个Application对象，类似于进程的概念；打开的Visio文件有很多窗口，有一个ActiveWindow的主窗口，选取窗口、形状窗口;
+模具文件打开后也是一个Document、打开的Visio文件也是一个Document、ActiveDoucment是指当前Visio窗口对应的文档，每个Visio的Document有一个或者多个Page，
+如系统中有两个Page、一个为绘图Page,一个为背景Page。
+模具文件里面有很多Master,Master类似于模板的概念，一个Master代表一个设备类型、Shape是定义一个图形的信息，模具里面的Master有且只有一个Shape，每个Shape又有很多Cell，
+代表一个ShapeSheet里面的一个格子，每个格子都有一个唯一的引用名称的。
+Visio文档里面，和模具文件不同，里面一个大千世界，有很多Master，也很多Shape和Cell，但是由于我们看到图纸可能一个模具的设备会有拷贝多个，因此它们
+公用一个Master，也就是一个Master有多个Shape引用，我们分析文件，就知道里面有一个MasterID，有点像数据库里面的外键一样。
+
+
